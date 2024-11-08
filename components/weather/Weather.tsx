@@ -13,11 +13,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { WeatherDetailBox } from "./WeatherDetailBox";
-import { useTheme } from 'next-themes';
+import { WeatherSkeleton } from "./WeatherSkeleton";
 
 export const Weather = () => {
-    const { theme } = useTheme(); 
   const [city, setCity] = useState("");
+  const [loading, setLoading] = useState(false);
   const [weatherData, setWeatherData] = useState({
     city: "New York",
     atmosphere: "Partly Cloudy",
@@ -34,7 +34,13 @@ export const Weather = () => {
   };
 
   const handleSearch = async () => {
-    console.log(`${process.env.NEXT_PUBLIC_WEATHERAPI_URL}/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}`); 
+    if (!city.trim()) {
+      toast.error("Please enter a city name.", {
+        containerId: 'GlobalApplicationToast',
+      });
+      return;
+    }
+    setLoading(true);
     try {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_WEATHERAPI_URL}/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}`
@@ -58,6 +64,8 @@ export const Weather = () => {
           containerId: 'GlobalApplicationToast',
         }
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,48 +88,56 @@ export const Weather = () => {
       </div>
 
       <Card className="w-full max-w-md mx-auto shadow-lg dark:bg-gray-700 dark:text-white">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            {weatherData.city}
-          </CardTitle>
-          <p className="text-center text-muted-foreground dark:text-gray-300">
-            {weatherData.atmosphere}
-          </p>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
-            <WeatherDetailBox
-              icon={Thermometer}
-              label="Temperature"
-              value={`${weatherData.temperature}°C`}
-            />
-            <WeatherDetailBox
-              icon={Thermometer}
-              label="Feels Like"
-              value={`${weatherData.feelsLike}°C`}
-            />
-            <WeatherDetailBox
-              icon={Droplets}
-              label="Humidity"
-              value={`${weatherData.humidity}%`}
-            />
-            <WeatherDetailBox
-              icon={Wind}
-              label="Wind Speed"
-              value={`${weatherData.windSpeed} km/h`}
-            />
-          </div>
-          <div className="text-center space-y-2">
-            <p>
-              <span className="font-semibold">Sunrise:</span>{" "}
-              {weatherData.sunrise}
-            </p>
-            <p>
-              <span className="font-semibold">Sunset:</span>{" "}
-              {weatherData.sunset}
-            </p>
-          </div>
-        </CardContent>
+        <div className={`min-h-[387px] ${loading ? 'h-96-at-633px' : ''}`}>
+          {loading ? (
+            <WeatherSkeleton />
+          ) : (
+            <>
+              <CardHeader>
+                <CardTitle className="text-2xl font-bold text-center">
+                  {weatherData.city}
+                </CardTitle>
+                <p className="text-center text-muted-foreground dark:text-gray-300">
+                  {weatherData.atmosphere}
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <WeatherDetailBox
+                    icon={Thermometer}
+                    label="Temperature"
+                    value={`${weatherData.temperature}°C`}
+                  />
+                  <WeatherDetailBox
+                    icon={Thermometer}
+                    label="Feels Like"
+                    value={`${weatherData.feelsLike}°C`}
+                  />
+                  <WeatherDetailBox
+                    icon={Droplets}
+                    label="Humidity"
+                    value={`${weatherData.humidity}%`}
+                  />
+                  <WeatherDetailBox
+                    icon={Wind}
+                    label="Wind Speed"
+                    value={`${weatherData.windSpeed} km/h`}
+                  />
+                </div>
+                <div className="text-center space-y-2">
+                  <p>
+                    <span className="font-semibold">Sunrise:</span>{" "}
+                    {weatherData.sunrise}
+                  </p>
+                  <p>
+                    <span className="font-semibold">Sunset:</span>{" "}
+                    {weatherData.sunset}
+                  </p>
+                </div>
+              </CardContent>
+            </>
+          )}
+        </div>
       </Card>
     </div>
   );
