@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Providers } from "./providers";
 import "./globals.css";
+import { ToastContainer } from "react-toastify";
 import Navbar from "@/components/Navbar";
 
 const geistSans = localFont({
@@ -32,6 +33,19 @@ export default function RootLayout({
       >
         <Providers>
           <Navbar />
+          <ToastContainer 
+            position="top-right"
+            autoClose={4000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            containerId="GlobalApplicationToast"
+          />
           {children}
         </Providers>
       </body>

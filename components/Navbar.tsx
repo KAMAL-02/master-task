@@ -35,9 +35,9 @@ export default function Navbar() {
                 href={item.href}
                 className={`px-4 py-2 rounded-md text-base font-medium ${
                   pathname === item.href
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:opacity-70 hover:bg-accent hover:text-accent-foreground'
-                } transition-opacity duration-300`}
+                    ? 'text-primary' // active item color
+                    : 'text-muted-foreground hover:opacity-80'
+                } transition-colors duration-300`}
               >
                 {item.name}
               </Link>
@@ -80,9 +80,9 @@ export default function Navbar() {
                 href={item.href}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   pathname === item.href
-                    ? 'bg-primary text-primary-foreground'
-                    : 'text-muted-foreground hover:opacity-90 hover:bg-accent hover:text-accent-foreground'
-                } transition-opacity duration-300`}
+                    ? 'text-primary'
+                    : 'text-muted-foreground hover:text-gray-300 hover:opacity-80'
+                } transition-colors duration-300`}
               >
                 {item.name}
               </Link>

@@ -1,9 +1,10 @@
 import React from 'react'
+import { Weather } from '@/components/Weather'
 
 const page = () => {
   return (
     <div>
-      hello
+      <Weather />
     </div>
   )
 }
