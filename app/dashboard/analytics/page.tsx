@@ -1,10 +1,10 @@
 import React from 'react'
-import NewsFeed from '@/components/news/NewsFeed'
+import AnalyticsDashboard from '@/components/analytics/analyticsDashboard'
 
 const page = () => {
   return (
     <div>
-      <NewsFeed />
+      <AnalyticsDashboard />
     </div>
   )
 }
