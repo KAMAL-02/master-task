@@ -1,19 +1,15 @@
 "use client";
 
-import { useState } from "react";
-import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import {
-  Droplets,
-  Thermometer,
-  Wind,
-} from "lucide-react";
+import { useState, useEffect } from "react";
+import { Droplets, Thermometer, Wind } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { WeatherDetailBox } from "./WeatherDetailBox";
 import { WeatherSkeleton } from "./WeatherSkeleton";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 export const Weather = () => {
   const [city, setCity] = useState("");
@@ -43,7 +39,7 @@ export const Weather = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_WEATHERAPI_URL}/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}`
+        `${process.env.NEXT_PUBLIC_WEATHERAPI_URL}/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}&units=metric`
       );
 
       const data = response.data;
@@ -57,6 +53,7 @@ export const Weather = () => {
         sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
         sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
       });
+
     } catch (error) {
       toast.error(
         "Unable to fetch weather data. Please try another city.",

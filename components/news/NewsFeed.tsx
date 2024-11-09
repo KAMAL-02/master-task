@@ -6,8 +6,8 @@ import NewsViewToggle from './NewsViewToggle'
 import { useMediaQuery } from 'react-responsive'
 import { Button } from '@/components/ui/button'
 import { NewsSkeleton } from './NewsSkeleton'
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 
 interface NewsItem {
   title: string
@@ -47,21 +47,31 @@ export default function NewsFeed() {
         publishedAt: article.publishedAt,
       }))
       setNewsItems(articles)
+
+      localStorage.setItem('newsPage', page.toString())
+      localStorage.setItem('newsItems', JSON.stringify(articles))
     } catch (error) {
-      toast.error(
-        "Unable to get the News. Please try another city.",
-        {
-          containerId: 'GlobalApplicationToast',
-        }
-      );
+      toast.error("Unable to get the News. Please try another city.", {
+        containerId: 'GlobalApplicationToast',
+      })
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    fetchNews(page)
-  }, [page])
+
+    const savedPage = localStorage.getItem('newsPage')
+    const savedNewsItems = localStorage.getItem('newsItems')
+
+    if (savedPage && savedNewsItems) {
+      setPage(Number(savedPage))
+      setNewsItems(JSON.parse(savedNewsItems))
+      setLoading(false)
+    } else {
+      fetchNews(page)
+    }
+  }, [])
 
   useEffect(() => {
     if (isMobile) {
@@ -75,8 +85,17 @@ export default function NewsFeed() {
     }
   }
 
-  const handleNextPage = () => setPage((prevPage) => prevPage + 1)
-  const handlePreviousPage = () => setPage((prevPage) => Math.max(prevPage - 1, 1))
+  const handleNextPage = () => {
+    const newPage = page + 1
+    setPage(newPage)
+    fetchNews(newPage) // Fetch next page data only when the user clicks 'Next'
+  }
+
+  const handlePreviousPage = () => {
+    const newPage = Math.max(page - 1, 1)
+    setPage(newPage)
+    fetchNews(newPage) // Fetch previous page data only when the user clicks 'Previous'
+  }
 
   return (
     <div className="container mx-auto p-4 bg-white mt-3 shadow-lg rounded-lg dark:bg-gray-800 dark:text-white">
@@ -87,7 +106,7 @@ export default function NewsFeed() {
 
       <div className="min-h-[400px]"> {/* Fixed height container for both loading and content */}
         {loading ? (
-          <NewsSkeleton /> 
+          <NewsSkeleton />
         ) : newsItems.length === 0 ? (
           <p className="text-center text-lg">No news available.</p>
         ) : (
@@ -102,31 +121,18 @@ export default function NewsFeed() {
                       className="rounded-md w-full h-full object-cover"
                     />
                   </div>
-                  <h2 className="text-lg font-bold mt-2">{news.title ? (news.title.length > 80 ? `${news.title.slice(0, 80)}...` : news.title) : "No title"}</h2>
+                  <h2 className="text-lg font-bold mt-2">
+                    {news.title ? (news.title.length > 80 ? `${news.title.slice(0, 80)}...` : news.title) : "No title"}
+                  </h2>
                   <p className="text-xs text-gray-400 mt-1">
                     by {news.author} - {new Date(news.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </p>
                   <p className="text-sm text-gray-200 mb-2">
                     {news.description ? (news.description.length > 100 ? `${news.description.slice(0, 100)}...` : news.description) : "No description available."}
                   </p>
-                  <a
-                    href={news.articleUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 text-sm mb-1"
-                  >
+                  <a href={news.articleUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 text-sm mb-1">
                     Read More
                   </a>
-                  <div className="mt-2 flex flex-col items-center">
-                    <a
-                      href={news.articleUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 px-4 py-2 rounded-md text-sm inline-block hover:text-blue-400 transition-colors"
-                    >
-                      View Full Article
-                    </a>
-                  </div>
                 </div>
               ))}
             </div>
