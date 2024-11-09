@@ -1,5 +1,3 @@
-// app/components/UserActivityChart.tsx
-
 'use client'
 
 import { Line } from 'react-chartjs-2'
@@ -13,7 +11,6 @@ import {
   Legend
 } from 'chart.js'
 
-// Register required chart components
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend)
 
 const UserActivity: React.FC = () => {
@@ -32,43 +29,36 @@ const UserActivity: React.FC = () => {
 
   const options = {
     responsive: true,
-    layout: {
-      padding: 0 // Remove extra padding inside the chart
-    },
     plugins: {
       legend: {
-        display: true,
-        position: 'top' as const
+        labels: {
+          color: 'black' // Light mode color for legend text
+        }
       }
     },
     scales: {
       x: {
-        title: {
-          display: true,
-        },
         ticks: {
-          maxRotation: 0, // Prevents too much rotation
-          padding: 2 // Reduces space around x-axis labels
+          color: 'black' // Light mode color for x-axis labels
+        },
+        grid: {
+          color: '#E5E7EB' // Light mode grid color (gray-200)
         }
       },
       y: {
-        title: {
-          display: true,
-        },
-        beginAtZero: true,
-        min: 0, // Ensures the chart doesn’t start below zero
-        max: 80, // Sets a maximum closer to the highest data point
         ticks: {
-          padding: 2, // Reduces space between y-axis labels and the chart area
-          stepSize: 20 // Keeps steps minimal to fit the data range tightly
+          color: 'black' // Light mode color for y-axis labels
+        },
+        grid: {
+          color: '#E5E7EB' // Light mode grid color (gray-200)
         }
       }
     }
   }
- //!Todo : max-w-sm max-h-72
+
   return (
-    <div className="p-2 m-4 bg-white rounded-lg shadow-md md:min-h-[380px]">
-      <h2 className="text-lg font-semibold mb-2 pl-6">User Activity</h2>
+    <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-200">User Activity</h2>
       <Line data={data} options={options} />
     </div>
   )

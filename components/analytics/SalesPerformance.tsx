@@ -34,34 +34,34 @@ const SalesPerformance: React.FC = () => {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
-        position: 'top' as const
+        labels: {
+          color: 'black' // Light mode legend text color
+        }
       }
     },
     scales: {
       x: {
-        title: {
-          display: true,
+        ticks: {
+          color: 'black' // Light mode x-axis label color
         },
         grid: {
           display: false
         }
       },
       y: {
-        title: {
-          display: true,
+        ticks: {
+          color: 'black' // Light mode y-axis label color
         },
-        beginAtZero: true,
         grid: {
-          color: 'rgba(200, 200, 200, 0.2)' // Light grid lines for better readability
+          color: '#E5E7EB' // Light mode grid color (gray-200)
         }
       }
     }
   }
 
   return (
-    <div className="p-4 m-4 bg-white rounded-lg shadow-md md:min-h-[380px]">
-      <h2 className="text-lg font-semibold mb-4">Sales Performance</h2>
+    <div className="w-full p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md">
+      <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-gray-100">Sales Performance</h2>
       <Bar data={data} options={options} />
     </div>
   )

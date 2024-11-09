@@ -5,17 +5,17 @@ import UserTable from "./UserTable";
 
 function AnalyticsDashboard() {
   return (
-    <div>
-      <h3 className="text-black ml-4 mt-4 font-medium text-2xl">Analytics DashBoard</h3>
-    <div className="flex flex-col md:flex-row gap-4">
-        <div className="flex-1">
-        <UserActivity />
+    <div className="p-4">
+      <h3 className="text-black font-medium text-2xl mb-6 ml-6 dark:text-gray-100">Analytics Dashboard</h3>
+      <div className="flex flex-col items-center gap-4 lg:flex-row justify-around">
+        <div className="flex-1 w-full  max-w-[600px]">
+          <UserActivity />
+        </div>
+        <div className="flex-1 w-full max-w-[600px]">
+          <SalesPerformance />
+        </div>
       </div>
-      <div className="flex-1">
-        <SalesPerformance />
-      </div>
-    </div>
-    <UserTable />
+      <UserTable />
     </div>
   );
 }
