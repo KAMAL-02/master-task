@@ -23,7 +23,7 @@ This route displays the weather of any city and includes a news dashboard featur
 - **Dark Mode:** Seamless dark mode support
 - **Error Handling:** Proper error handling for city search and API responses
 
-![Weather Image](./public/Masterji.png)
+![Weather Image](./public/MasterJi.png)
 ![Toggle View](./public/Toggleview.png)
 ![Dark Mode](./public/MasterjiDark.png)
 
@@ -39,7 +39,7 @@ This route features a drag-and-drop Kanban board for task management.
 - **LocalStorage Persistence:** The board's state is saved in localStorage to persist data across page reloads
 - **Responsive Design:** Adapts well to different screen sizes, including mobile views
 
-![Kanban Board](./public/kanban.png)
+![Kanban Board](./public/Kanban.png)
 ![Dark Mode Kanban](./public/KanbanDark.png)
 ![Add New Task](./public/KanbanAdd.png)
 
