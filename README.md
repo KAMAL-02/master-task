@@ -99,4 +99,4 @@ The app should be running at [http://localhost:3000](http://localhost:3000).
 
 ## 🌐 Deployment
 
-You can view the deployed version of this project here: [Deployed Application Link]()
+You can view the deployed version of this project here: [Deployed Application Link](https://master-task-one.vercel.app/)
