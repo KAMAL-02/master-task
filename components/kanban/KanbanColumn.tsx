@@ -48,7 +48,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) =
   }
 
   return (
-    <div className="flex flex-col w-full p-4 bg-gray-200 rounded-lg shadow-md">
+    <div className="flex flex-col w-full p-4 bg-gray-200 dark:bg-gray-800 rounded-lg shadow-md">
       <h2 className="mb-4 text-lg font-semibold">{title}</h2>
 
       <Droppable droppableId={title}>
@@ -73,7 +73,7 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) =
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className={`p-2 mb-1 bg-white rounded-md shadow ${
+                      className={`p-2 mb-1 bg-white dark:bg-gray-700 rounded-md shadow ${
                         snapshot.isDragging ? 'opacity-50' : ''
                       }`}
                     >
@@ -84,10 +84,10 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) =
                           onCancel={() => setEditingTask(null)}
                         />
                       ) : (
-                        <>
+                        <div className="space-y-2">
                           <div className="flex justify-between items-start">
-                            <h3 className="font-semibold">{task.title}</h3>
-                            <div className="flex h-4">
+                            <h3 className="font-semibold break-words">{task.title}</h3>
+                            <div className="flex h-4 flex-shrink-0 ml-2">
                               <Button
                                 size="icon"
                                 variant="ghost"
@@ -106,11 +106,11 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) =
                               </Button>
                             </div>
                           </div>
-                          <p className="text-sm text-gray-600">{task.description}</p>
-                          <p className="text-xs text-gray-500">
+                          <p className="text-sm text-gray-600 dark:text-gray-200 whitespace-pre-wrap break-words">{task.description}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-300">
                             Due: {task.dueDate ? new Date(task.dueDate).toLocaleDateString() : 'No due date'}
                           </p>
-                        </>
+                        </div>
                       )}
                     </div>
                   )}

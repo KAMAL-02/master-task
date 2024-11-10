@@ -40,7 +40,7 @@ const KanbanDashboard: React.FC = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 p-8">
+      <div className="flex flex-col lg:flex-row gap-4 p-8">
         {Object.entries(tasks).map(([columnId, columnTasks]) => (
           <KanbanColumn
             key={columnId}

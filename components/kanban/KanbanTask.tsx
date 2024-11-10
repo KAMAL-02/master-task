@@ -108,7 +108,7 @@ export default function KanbanTask({ onSubmit, initialData, onCancel }: KanbanTa
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full">Add New Task</Button>
+        <Button className="w-full bg-white text-black">+ Add New Task</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
