@@ -1,5 +1,3 @@
-// app/components/SalesPerformance.tsx
-
 'use client'
 
 import { Bar } from 'react-chartjs-2'
@@ -11,20 +9,24 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import { useTheme } from 'next-themes'
 
-// Register required chart components
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend)
 
 const SalesPerformance: React.FC = () => {
-  // Sample data for monthly sales
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
   const data = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
     datasets: [
       {
         label: 'Sales Performance',
         data: [30, 45, 60, 50, 70, 80, 60, 75, 85, 90, 100, 95],
-        backgroundColor: 'rgba(128, 0, 128, 0.6)', // Purplish color with slight transparency
-        borderColor: 'rgba(128, 0, 128, 1)', // Solid border in the same color
+        backgroundColor: isDark
+          ? 'rgba(128, 0, 128, 0.6)' 
+          : 'rgba(128, 0, 128, 0.3)',
+        borderColor: 'rgba(128, 0, 128, 1)',
         borderWidth: 1
       }
     ]
@@ -35,14 +37,14 @@ const SalesPerformance: React.FC = () => {
     plugins: {
       legend: {
         labels: {
-          color: 'black' // Light mode legend text color
+          color: isDark ? '#E5E7EB' : 'black'
         }
       }
     },
     scales: {
       x: {
         ticks: {
-          color: 'black' // Light mode x-axis label color
+          color: isDark ? '#E5E7EB' : 'black'
         },
         grid: {
           display: false
@@ -50,10 +52,10 @@ const SalesPerformance: React.FC = () => {
       },
       y: {
         ticks: {
-          color: 'black' // Light mode y-axis label color
+          color: isDark ? '#E5E7EB' : 'black'
         },
         grid: {
-          color: '#E5E7EB' // Light mode grid color (gray-200)
+          color: isDark ? '#444444' : '#E5E7EB'
         }
       }
     }

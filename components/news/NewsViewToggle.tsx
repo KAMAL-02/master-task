@@ -1,27 +1,33 @@
-// components/ViewToggleSwitch.tsx
-import { Switch } from '../ui/switch'
+import React from 'react';
+import { Switch } from '@/components/ui/switch';
+import { ViewType } from '../../types/news/newsTypes';
+import { List, Grid } from 'lucide-react';
 
 interface ViewToggleSwitchProps {
-  view: 'list' | 'grid'
-  onChange: (view: 'list' | 'grid') => void
+  view: ViewType;
+  onChange: (view: ViewType) => void;
 }
 
-const NewsViewToggle: React.FC<ViewToggleSwitchProps> = ({ view, onChange }) => {
+export const NewsViewToggle: React.FC<ViewToggleSwitchProps> = ({ view, onChange }) => {
   const handleSwitchChange = (checked: boolean) => {
-    onChange(checked ? 'grid' : 'list')
-  }
+    onChange(checked ? 'grid' : 'list');
+  };
 
   return (
     <div className="flex items-center space-x-4">
-      <span className="text-lg">List View</span>
+      <div className="flex items-center space-x-1">
+        <List className="w-4 h-4" />
+        <span className="text-sm">List View</span>
+      </div>
       <Switch
         onCheckedChange={handleSwitchChange}
         checked={view === 'grid'}
-        className="w-9"
+        className="w-8 h-4"
       />
-      <span className="text-lg">Grid View</span>
+      <div className="flex items-center space-x-1">
+        <Grid className="w-4 h-4" />
+        <span className="text-sm">Grid View</span>
+      </div>
     </div>
-  )
-}
-
-export default NewsViewToggle
+  );
+};

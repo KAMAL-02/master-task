@@ -8,13 +8,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
+import { FormData } from '@/types/kanban/kanbanTask'
 import "react-datepicker/dist/react-datepicker.css"
-
-export interface FormData {
-  title: string
-  description: string
-  dueDate: Date | null
-}
 
 interface KanbanTaskProps {
   onSubmit: (data: FormData) => void
@@ -108,7 +103,7 @@ export default function KanbanTask({ onSubmit, initialData, onCancel }: KanbanTa
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-white text-black">+ Add New Task</Button>
+        <Button className="w-full bg-white text-black hover:bg-gray-100">+ Add New Task</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

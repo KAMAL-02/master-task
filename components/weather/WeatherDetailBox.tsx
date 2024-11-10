@@ -1,10 +1,13 @@
-interface WeatherDetailBoxProps {
-    icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; 
-    label: string;
-    value: string | number;
-  }
+"use client";
 
-export const WeatherDetailBox: React.FC<WeatherDetailBoxProps> = ({ icon: Icon, label, value }) => (
+import React from 'react';
+import { WeatherDetailBoxProps } from '../../types/weather/weatherType';
+
+export const WeatherDetailBox: React.FC<WeatherDetailBoxProps> = ({ 
+  icon: Icon, 
+  label, 
+  value 
+}) => (
   <div className="p-4 shadow-lg rounded-lg bg-white dark:bg-gray-600 flex items-center space-x-2">
     <Icon className="w-5 h-5 text-primary dark:text-gray-200" />
     <div>
@@ -12,6 +15,4 @@ export const WeatherDetailBox: React.FC<WeatherDetailBoxProps> = ({ icon: Icon, 
       <p className="text-xl font-bold dark:text-white">{value}</p>
     </div>
   </div>
-)
-
-
+);

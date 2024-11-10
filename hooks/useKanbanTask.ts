@@ -13,13 +13,11 @@ export const useKanbanTasks = () => {
   const [tasks, setTasks] = useState<TasksState>(initialState)
   const [isLoading, setIsLoading] = useState(true)
 
-  // Load tasks from localStorage
   const loadTasks = useCallback(() => {
     try {
       const savedTasks = localStorage.getItem(STORAGE_KEY)
       if (savedTasks) {
         const parsed = JSON.parse(savedTasks)
-        // Convert ISO date strings back to Date objects
         Object.keys(parsed).forEach(column => {
           parsed[column] = parsed[column].map((task: Task) => ({
             ...task,
@@ -36,7 +34,6 @@ export const useKanbanTasks = () => {
     }
   }, [])
 
-  // Save tasks to localStorage
   const saveTasks = useCallback((tasksToSave: TasksState) => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(tasksToSave))
@@ -45,14 +42,11 @@ export const useKanbanTasks = () => {
     }
   }, [])
 
-  // Load tasks on initial mount and when window gains focus
   useEffect(() => {
     loadTasks()
 
-    // Add focus event listener to reload tasks when tab regains focus
     window.addEventListener('focus', loadTasks)
     
-    // Add storage event listener to sync across tabs
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === STORAGE_KEY && e.newValue) {
         loadTasks()
@@ -66,7 +60,6 @@ export const useKanbanTasks = () => {
     }
   }, [loadTasks])
 
-  // Save tasks whenever they change
   useEffect(() => {
     if (!isLoading) {
       saveTasks(tasks)
@@ -76,8 +69,7 @@ export const useKanbanTasks = () => {
   const updateTasks = useCallback((newTasks: TasksState | ((prev: TasksState) => TasksState)) => {
     setTasks(prev => {
       const updatedTasks = typeof newTasks === 'function' ? newTasks(prev) : newTasks
-      
-      // Validate and clean tasks
+
       const validatedTasks = Object.keys(updatedTasks).reduce((acc, column) => {
         acc[column as keyof TasksState] = updatedTasks[column as keyof TasksState]
           .filter(task => task && task.id)

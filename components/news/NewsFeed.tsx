@@ -1,76 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
-import NewsViewToggle from "./NewsViewToggle";
+import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Button } from "@/components/ui/button";
-import { NewsSkeleton } from "./NewsSkeleton";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-interface NewsItem {
-  title: string;
-  description: string;
-  imageUrl: string;
-  articleUrl: string;
-  author: string;
-  publishedAt: string;
-}
+import MoonLoader from "react-spinners/MoonLoader";
+import { NewsViewToggle } from "./NewsViewToggle";
+import NewsCard  from "./NewsCard";
+import { useNews } from "../../hooks/useNews";
+import { ViewType } from "../../types/news/newsTypes";
 
 export default function NewsFeed() {
-  const [view, setView] = useState<"list" | "grid">("grid");
-  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [page, setPage] = useState<number>(1);
-
+  const [view, setView] = useState<ViewType>("grid");
+  const { newsItems, loading, page, setPage, fetchNews } = useNews();
   const isMobile = useMediaQuery({ maxWidth: 767 });
-
-  const fetchNews = async (page: number) => {
-    setLoading(true);
-    try {
-      const response = await axios.get(process.env.NEXT_PUBLIC_NEWSAPI_URL!, {
-        params: {
-          country: "us",
-          apiKey: process.env.NEXT_PUBLIC_NEWSAPI_KEY!,
-          language: "en",
-          page: page,
-          pageSize: 2,
-        },
-      });
-      const articles = response.data.articles.map((article: any) => ({
-        title: article.title,
-        description: article.description,
-        imageUrl: article.urlToImage,
-        articleUrl: article.url,
-        author: article.author || "Unknown Author",
-        publishedAt: article.publishedAt,
-      }));
-      setNewsItems(articles);
-
-      localStorage.setItem("newsPage", page.toString());
-      localStorage.setItem("newsItems", JSON.stringify(articles));
-    } catch (error) {
-      toast.error("Unable to get the News. Please try another city.", {
-        containerId: "GlobalApplicationToast",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    const savedPage = localStorage.getItem("newsPage");
-    const savedNewsItems = localStorage.getItem("newsItems");
-
-    if (savedPage && savedNewsItems) {
-      setPage(Number(savedPage));
-      setNewsItems(JSON.parse(savedNewsItems));
-      setLoading(false);
-    } else {
-      fetchNews(page);
-    }
-  }, []);
 
   useEffect(() => {
     if (isMobile) {
@@ -78,7 +20,7 @@ export default function NewsFeed() {
     }
   }, [isMobile]);
 
-  const handleViewChange = (newView: "list" | "grid") => {
+  const handleViewChange = (newView: ViewType) => {
     if (!isMobile) {
       setView(newView);
     }
@@ -87,13 +29,13 @@ export default function NewsFeed() {
   const handleNextPage = () => {
     const newPage = page + 1;
     setPage(newPage);
-    fetchNews(newPage); // Fetch next page data only when the user clicks 'Next'
+    fetchNews(newPage);
   };
 
   const handlePreviousPage = () => {
     const newPage = Math.max(page - 1, 1);
     setPage(newPage);
-    fetchNews(newPage); // Fetch previous page data only when the user clicks 'Previous'
+    fetchNews(newPage);
   };
 
   return (
@@ -108,10 +50,10 @@ export default function NewsFeed() {
       </div>
 
       <div className="min-h-[400px]">
-        {" "}
-        {/* Fixed height container for both loading and content */}
         {loading ? (
-          <NewsSkeleton />
+          <div className="min-h-[400px] flex items-center justify-center">
+            <MoonLoader size={40} />
+          </div>
         ) : newsItems.length === 0 ? (
           <p className="text-center text-lg">No news available.</p>
         ) : (
@@ -124,53 +66,7 @@ export default function NewsFeed() {
               }`}
             >
               {newsItems.map((news, index) => (
-                <div
-                  key={index}
-                  className="bg-white p-4 rounded-lg shadow-lg dark:bg-gray-800 dark:text-white"
-                >
-                  <div className="relative w-full h-40 mb-2">
-                    <img
-                      src={news.imageUrl || "/fallback-image.jpg"}
-                      alt={news.title}
-                      className="rounded-md w-full h-full object-cover"
-                    />
-                  </div>
-                  <h2 className="text-lg font-bold mt-2">
-                    {news.title
-                      ? news.title.length > 80
-                        ? `${news.title.slice(0, 80)}...`
-                        : news.title
-                      : "No title"}
-                  </h2>
-                  <p className="text-xs text-gray-400 mt-1">
-                    by {news.author} -{" "}
-                    {new Date(news.publishedAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                    })}
-                  </p>
-                  <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                    {news.description
-                      ? news.description.length > 100
-                        ? `${news.description.slice(0, 100)}...`
-                        : news.description
-                      : "No description available."}
-                  </p>
-                  <a
-                    href={news.articleUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 text-sm mb-1"
-                  >
-                    Read More
-                  </a>
-                  <div className="text-center mt-4">
-                    <a href={news.articleUrl} className="text-blue-500 hover:underline">
-                      View More
-                    </a>
-                  </div>
-                </div>
+                <NewsCard key={index} news={news} />
               ))}
             </div>
           </div>

@@ -10,10 +10,14 @@ import {
   Tooltip,
   Legend
 } from 'chart.js'
+import { useTheme } from 'next-themes'
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend)
 
 const UserActivity: React.FC = () => {
+  const { theme } = useTheme()
+  const isDark = theme === 'dark'
+
   const data = {
     labels: ['Day1', 'Day3', 'Day5', 'Day7', 'Day9'],
     datasets: [
@@ -32,25 +36,25 @@ const UserActivity: React.FC = () => {
     plugins: {
       legend: {
         labels: {
-          color: 'black' // Light mode color for legend text
+          color: isDark ? '#E5E7EB' : 'black'
         }
       }
     },
     scales: {
       x: {
         ticks: {
-          color: 'black' // Light mode color for x-axis labels
+          color: isDark ? '#E5E7EB' : 'black'
         },
         grid: {
-          color: '#E5E7EB' // Light mode grid color (gray-200)
+          color: '#E5E7EB'
         }
       },
       y: {
         ticks: {
-          color: 'black' // Light mode color for y-axis labels
+          color: isDark ? '#E5E7EB' : 'black' 
         },
         grid: {
-          color: '#E5E7EB' // Light mode grid color (gray-200)
+          color: '#E5E7EB'
         }
       }
     }

@@ -1,16 +1,10 @@
 "use client"
 import { useState } from 'react'
 import { Pencil, Trash2 } from 'lucide-react'
-import KanbanTask, { FormData } from './KanbanTask'
+import KanbanTask from './KanbanTask'
+import { FormData, Task } from '@/types/kanban/kanbanTask'
 import { Button } from "@/components/ui/button"
 import { Droppable, Draggable } from '@hello-pangea/dnd'
-
-interface Task {
-  id: string
-  title: string
-  description: string
-  dueDate: Date | null
-}
 
 interface KanbanColumnProps {
   title: string
@@ -21,7 +15,6 @@ interface KanbanColumnProps {
 const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) => {
   const [editingTask, setEditingTask] = useState<string | null>(null)
   
-  // Ensure tasks is always a valid array
   const safeTasks = Array.isArray(tasks) ? tasks.filter(task => task && task.id) : []
 
   const handleAddTask = (data: FormData) => {
@@ -59,7 +52,6 @@ const KanbanColumn: React.FC<KanbanColumnProps> = ({ title, tasks, setTasks }) =
             className="flex-1 min-h-[100px] mb-2"
           >
             {safeTasks.map((task, index) => {
-              // Add additional safety check
               if (!task || !task.id) return null
 
               return (

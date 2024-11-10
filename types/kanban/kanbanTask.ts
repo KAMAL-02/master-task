@@ -10,3 +10,9 @@ export interface Task {
     'In Progress': Task[]
     'Completed': Task[]
 }
+
+export interface FormData {
+  title: string
+  description: string
+  dueDate: Date | null
+}
