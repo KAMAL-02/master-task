@@ -4,6 +4,7 @@ import { Providers } from "./providers";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -46,7 +47,10 @@ export default function RootLayout({
             theme="colored"
             containerId="GlobalApplicationToast"
           />
+          <div className="flex flex-col min-h-screen">
           {children}
+          <Footer />
+          </div>
         </Providers>
       </body>
     </html>

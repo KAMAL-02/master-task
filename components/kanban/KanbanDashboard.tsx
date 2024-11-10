@@ -40,6 +40,7 @@ const KanbanDashboard: React.FC = () => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <h3 className="text-black font-medium text-2xl pt-3 ml-8 dark:text-gray-100">Kanban Board</h3>
       <div className="flex flex-col lg:flex-row gap-4 p-8">
         {Object.entries(tasks).map(([columnId, columnTasks]) => (
           <KanbanColumn
