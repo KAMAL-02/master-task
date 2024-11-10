@@ -20,14 +20,13 @@ export default function Navbar() {
     <nav className="bg-background/95 dark:bg-gray-900 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo Section */}
+          
           <div className="flex items-center">
             <Link href="/" className="text-2xl font-bold text-primary">
               MasterJi
             </Link>
           </div>
 
-          {/* Centered Navigation Links */}
           <div className="hidden md:flex flex-1 justify-center space-x-8">
             {navItems.map((item) => (
               <Link
@@ -35,7 +34,7 @@ export default function Navbar() {
                 href={item.href}
                 className={`px-4 py-2 rounded-md text-base font-medium ${
                   pathname === item.href
-                    ? 'text-primary' // active item color
+                    ? 'text-primary'
                     : 'text-muted-foreground hover:opacity-80'
                 } transition-colors duration-300`}
               >
@@ -44,14 +43,11 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Theme Switch & Mobile Menu Button */}
           <div className="flex items-center space-x-4">
-            {/* Theme Switch */}
             <div className="hidden md:block">
               <ThemeSwitch />
             </div>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
