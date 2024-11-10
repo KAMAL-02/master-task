@@ -42,7 +42,7 @@ export default function NewsFeed() {
     <div className="container mx-auto p-4 bg-white mt-3 shadow-lg rounded-lg dark:bg-gray-800 dark:text-white">
       <div className="flex flex-col sm:flex-row items-center justify-between space-y-3 sm:space-y-0 sm:space-x-2 mb-1">
         <h1 className="text-2xl font-semibold">
-          What's happening around the world?
+          What&apos;s happening around the world?
         </h1>
         {!isMobile && (
           <NewsViewToggle view={view} onChange={handleViewChange} />

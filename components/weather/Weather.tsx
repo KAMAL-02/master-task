@@ -53,6 +53,7 @@ export const Weather = () => {
       });
 
     } catch (error) {
+      console.log(error);
       toast.error(
         "Unable to fetch weather data. Please try another city.",
         {
@@ -67,7 +68,7 @@ export const Weather = () => {
   return (
     <div className="w-full max-w-md mx-auto p-4 mt-3 shadow-md rounded-lg bg-white dark:bg-gray-800 dark:text-white">
       <p className="text-center text-2xl font-semibold mb-4 items-start flex">
-        How's the weather today?
+        How&apos;s the weather today?
       </p>
       <div className="mb-4 flex items-center space-x-2">
         <Input

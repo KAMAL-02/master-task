@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="text-center sm:text-left sm:flex-1 pt-3">
             <h3 className="font-bold text-base text-gray-800 dark:text-gray-200">YourBrand</h3>
             <p className="max-w-xs text-sm text-gray-700 mt-1 dark:text-gray-400">
-              Creating innovative solutions for tomorrow's challenges.
+              Creating innovative solutions for tomorrow&apos;s challenges.
             </p>
           </div>
 
