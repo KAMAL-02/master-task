@@ -74,12 +74,12 @@ export const Weather = () => {
       <div className="mb-4 flex items-center space-x-2">
         <Input
           type="text"
-          placeholder="New york"
+          placeholder="Enter city name"
           value={city}
           onChange={handleCityChange}
-          className="flex-1"
+          className="flex-1 dark:bg-gray-700"
         />
-        <Button onClick={handleSearch} className="ml-2 dark:bg-black dark:text-gray-200">
+        <Button onClick={handleSearch} className="ml-2">
           Get Weather
         </Button>
       </div>
