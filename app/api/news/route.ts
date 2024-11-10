@@ -24,6 +24,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(data);
   } catch (error) {
+    console.log(error);
     return NextResponse.json(
       { error: 'Failed to fetch news' },
       { status: 500 }
