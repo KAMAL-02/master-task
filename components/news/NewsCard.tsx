@@ -9,7 +9,7 @@ const NewsCard: React.FC<NewsCardProps> = ({ news }) => (
   <div className="bg-white p-4 rounded-lg shadow-lg dark:bg-gray-800 dark:text-white">
     <div className="relative w-full h-40 mb-2">
       <img
-        src={news.imageUrl || "/fallback-image.jpg"}
+        src={news.imageUrl || "/fallback-image.jpeg"}
         alt={news.title}
         className="rounded-md w-full h-full object-cover"
       />
