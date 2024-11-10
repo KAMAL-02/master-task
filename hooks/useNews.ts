@@ -1,3 +1,4 @@
+// hooks/useNews.ts
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -11,15 +12,14 @@ export const useNews = () => {
   const fetchNews = async (page: number) => {
     setLoading(true);
     try {
-      const response = await axios.get(process.env.NEXT_PUBLIC_NEWSAPI_URL!, {
+      // Updated to use our Next.js API route
+      const response = await axios.get('/api/news', {
         params: {
-          country: "us",
-          apiKey: process.env.NEXT_PUBLIC_NEWSAPI_KEY!,
-          language: "en",
           page: page,
           pageSize: 2,
         },
       });
+
       const articles = response.data.articles.map((article: any) => ({
         title: article.title,
         description: article.description,
@@ -28,12 +28,13 @@ export const useNews = () => {
         author: article.author || "Unknown Author",
         publishedAt: article.publishedAt,
       }));
+      
       setNewsItems(articles);
 
       localStorage.setItem("newsPage", page.toString());
       localStorage.setItem("newsItems", JSON.stringify(articles));
     } catch (error) {
-      toast.error(`${error}`, {
+      toast.error("Failed to fetch news", {
         containerId: "GlobalApplicationToast",
       });
     } finally {
