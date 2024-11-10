@@ -33,7 +33,7 @@ export const useNews = () => {
       localStorage.setItem("newsPage", page.toString());
       localStorage.setItem("newsItems", JSON.stringify(articles));
     } catch (error) {
-      toast.error("Unable to get the News. Please try another city.", {
+      toast.error(`${error}`, {
         containerId: "GlobalApplicationToast",
       });
     } finally {
