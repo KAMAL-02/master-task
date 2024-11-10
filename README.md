@@ -82,11 +82,11 @@ npm install
 Create a `.env.local` file in the root of your project and add the following environment variables:
 
 ```env
-NEXT_PUBLIC_WEATHERAPI_URL=' '
-NEXT_PUBLIC_WEATHERAPI_KEY=' '
-NEXT_PUBLIC_NEWSAPI_URL=' '
-NEXT_PUBLIC_USERSAPI_URL=' '
-NEXT_PUBLIC_NEWSAPI_KEY=' '
+WEATHERAPI_URL=' '
+WEATHERAPI_KEY=' '
+NEWSAPI_URL=' '
+USERSAPI_URL=' '
+NEWSAPI_KEY=' '
 ```
 
 ### 4. Run the Development Server
