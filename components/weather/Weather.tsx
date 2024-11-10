@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import  WeatherDisplay  from "./WeatherDisplay";
+import WeatherDisplay from "./WeatherDisplay";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
@@ -34,24 +34,14 @@ export const Weather = () => {
       });
       return;
     }
+
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_WEATHERAPI_URL}/weather?q=${city}&appid=${process.env.NEXT_PUBLIC_WEATHERAPI_KEY}&units=metric`
-      );
-
-      const data = response.data;
-      setWeatherData({
-        city: data.name,
-        atmosphere: data.weather[0].main,
-        temperature: data.main.temp,
-        feelsLike: data.main.feels_like,
-        humidity: data.main.humidity,
-        windSpeed: data.wind.speed,
-        sunrise: new Date(data.sys.sunrise * 1000).toLocaleTimeString(),
-        sunset: new Date(data.sys.sunset * 1000).toLocaleTimeString(),
+      const response = await axios.get('/api/weather', {
+        params: { city: city.trim() }
       });
 
+      setWeatherData(response.data);
     } catch (error) {
       console.log(error);
       toast.error(
@@ -78,8 +68,12 @@ export const Weather = () => {
           onChange={handleCityChange}
           className="flex-1 dark:bg-gray-700"
         />
-        <Button onClick={handleSearch} className="ml-2">
-          Get Weather
+        <Button 
+          onClick={handleSearch} 
+          className="ml-2"
+          disabled={loading}
+        >
+          {loading ? "Loading..." : "Get Weather"}
         </Button>
       </div>
       <WeatherDisplay loading={loading} weatherData={weatherData} />

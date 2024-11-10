@@ -22,15 +22,17 @@ export const useUsers = () => {
         setLoading(false);
       } else {
         try {
-          const response = await axios.get(`${process.env.NEXT_PUBLIC_USERSAPI_URL}/api/v1/Users`);
+
+          const response = await axios.get('/api/users');
           const fetchedUsers = response.data;
+          
           setUsers(fetchedUsers);
           setFilteredUsers(fetchedUsers);
           localStorage.setItem('users', JSON.stringify(fetchedUsers));
         } catch (err) {
           setError('Error fetching data');
           toast.error(
-            "Unable to fetch users data. Please try another city.",
+            "Unable to fetch users data. Please try again later.",
             {
               containerId: 'GlobalApplicationToast',
             }
