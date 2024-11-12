@@ -1,3 +1,6 @@
+Marks i got
+![Weather Image](./public/Evaluate-marks.png)
+
 A Next.js web application that integrates weather news, a Kanban board, and analytics dashboards with charting and task management functionalities. This project features responsive design, dark mode support, and local storage persistence.
 
 ## 🚀 Built With
